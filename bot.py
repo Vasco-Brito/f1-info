@@ -7,6 +7,7 @@ from config import DISCORD_TOKEN
 from commands.standings import register_standings_command
 from commands.next_race import register_next_command
 from commands.constructor_standings import register_constructor_standings
+from utils.keep_alive import keep_alive
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -33,5 +34,5 @@ register_standings_command(bot)
 register_constructor_standings(bot)
 register_votacao_command(bot)
 
-
+keep_alive()
 bot.run(DISCORD_TOKEN)
