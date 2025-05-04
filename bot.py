@@ -2,6 +2,7 @@
 import discord
 from discord.ext import commands
 
+from commands.liga.img_parser import img_command
 from commands.liga.votacao import register_votacao_command
 from config import DISCORD_TOKEN
 from commands.standings import register_standings_command
@@ -33,6 +34,7 @@ register_next_command(bot)
 register_standings_command(bot)
 register_constructor_standings(bot)
 register_votacao_command(bot)
+bot.tree.add_command(img_command)
 
-keep_alive()
+# keep_alive()
 bot.run(DISCORD_TOKEN)
