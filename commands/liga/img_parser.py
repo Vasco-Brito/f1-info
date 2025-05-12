@@ -9,9 +9,22 @@ PILOTOS_REAIS = [
     "Max VERSTAPPEN", "Sergio PEREZ", "Charles LECLERC", "Carlos SAINZ",
     "Lewis HAMILTON", "George RUSSELL", "Lando NORRIS", "Oscar PIASTRI",
     "Fernando ALONSO", "Lance STROLL", "Pierre GASLY", "Esteban OCON",
-    "Yuki TSUNODA", "Daniel RICCIARDO", "Valtteri BOTTAS", "Zhou GUANYU",
+    "Yuki TSUNODA", "Daniel RICCIARDO", "Valtteri BOTTAS", "ZHOU Guanyu",
     "Kevin MAGNUSSEN", "Nico HULKENBERG", "Alexander ALBON", "Logan SARGEANT"
 ]
+
+async def perguntar_jogadores_faltantes(interaction: Interaction, jogadores: list[str]) -> dict:
+    respostas = {}
+    for nome in jogadores:
+        await interaction.followup.send(f"❓ Qual o @ do jogador **{nome}**?")
+
+        def check(m):
+            return m.author == interaction.user and m.channel == interaction.channel
+
+        resposta = await interaction.client.wait_for("message", check=check, timeout=60)
+        respostas[nome] = resposta.content.strip()
+
+    return respostas
 
 def extract_text_from_box(image: Image.Image, box: tuple[int, int, int, int]) -> str:
     cropped = image.crop(box)
@@ -34,6 +47,11 @@ def corrigir_tempo_ou_gap(raw: str) -> str:
         return f"+{raw[1]}.{raw[2:]}"
 
     return raw
+
+def limpar_nome(nome: str) -> str:
+    nome = nome.strip()
+    nome = re.sub(r'[:;|]+$', '', nome)
+    return nome
 
 def extract_column_data(image: Image.Image, base_y: int, linhas: int, x1: int, x2: int, corrigir: bool = False) -> list[str]:
     dados = []
@@ -102,12 +120,12 @@ async def img_command(interaction: Interaction, imagem1: discord.Attachment, ima
 
     titulo = extract_race_title(img1)
 
-    nomes1 = extract_column_data(img1, 375, 14, 776, 964)
+    nomes1 = [limpar_nome(n) for n in extract_column_data(img1, 375, 14, 776, 964)]
     teams1 = extract_column_data(img1, 375, 14, 972, 1173)
     bests1 = extract_column_data(img1, 375, 14, 1356, 1483, corrigir=True)
     gaps1  = extract_column_data(img1, 375, 14, 1488, 1578, corrigir=True)
 
-    nomes2 = extract_column_data(img2, 690, 6, 776, 964)
+    nomes2 = [limpar_nome(n) for n in extract_column_data(img2, 690, 6, 776, 964)]
     teams2 = extract_column_data(img2, 690, 6, 972, 1173)
     bests2 = extract_column_data(img2, 690, 6, 1356, 1483, corrigir=True)
     gaps2  = extract_column_data(img2, 690, 6, 1488, 1578, corrigir=True)
@@ -120,11 +138,15 @@ async def img_command(interaction: Interaction, imagem1: discord.Attachment, ima
     file1 = File(fp=img1_editada, filename="imagem_topo_marcada.png")
     file2 = File(fp=img2_editada, filename="imagem_fundo_marcada.png")
 
-    # Conteúdo de resposta como texto simples para evitar limites de embed
-    linhas_formatadas = [
-        f"{i+1:>2}. {nomes[i]:<18} | {teams[i]:<16} | {bests[i]:<9} | {gaps[i]}"
-        for i in range(len(nomes))
-    ]
+    desconhecidos = [nome for nome in nomes if nome not in PILOTOS_REAIS and nome != ""]
+    mencoes = await perguntar_jogadores_faltantes(interaction, desconhecidos)
+
+    linhas_formatadas = []
+    for i in range(len(nomes)):
+        nome = nomes[i]
+        if nome in mencoes:
+            nome = mencoes[nome]
+        linhas_formatadas.append(f"{i+1:>2}. {nome:<18} | {teams[i]:<16} | {bests[i]:<9} | {gaps[i]}")
 
     texto = f"\U0001f3c1 **{titulo if titulo else 'Corrida não identificada'}**\n\n" + "\n".join(linhas_formatadas)
 
