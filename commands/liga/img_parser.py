@@ -1,6 +1,6 @@
 from discord import app_commands, Interaction, File
 import discord
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 import pytesseract
 import io
 import re
@@ -13,144 +13,123 @@ PILOTOS_REAIS = [
     "Kevin MAGNUSSEN", "Nico HULKENBERG", "Alexander ALBON", "Logan SARGEANT"
 ]
 
-async def perguntar_jogadores_faltantes(interaction: Interaction, jogadores: list[str]) -> dict:
-    respostas = {}
-    for nome in jogadores:
-        await interaction.followup.send(f"❓ Qual o @ do jogador **{nome}**?")
+async def perguntar_jogadores_faltantes() -> str:
+    return
 
-        def check(m):
-            return m.author == interaction.user and m.channel == interaction.channel
+async def processar_imagem_16_9(image: Image.Image, interaction: Interaction):
+    return "🖈 Imagem é 16:9 (1920x1080)"
 
-        resposta = await interaction.client.wait_for("message", check=check, timeout=60)
-        respostas[nome] = resposta.content.strip()
+async def processar_imagem_21_9(image: Image.Image, interaction: Interaction, debug: bool = False):
+    # Coordenadas
+    x_titulo, y_titulo = 566, 351
+    largura_titulo, altura_titulo = 1022, 40
+    box_titulo = (x_titulo, y_titulo, x_titulo + largura_titulo, y_titulo + altura_titulo)
 
-    return respostas
+    x_tab, y_tab = 1393, 489
+    w_tab, h_tab = 1449, 732
+    box_tab = (x_tab, y_tab, x_tab + w_tab, y_tab + h_tab)
 
-def extract_text_from_box(image: Image.Image, box: tuple[int, int, int, int]) -> str:
-    cropped = image.crop(box)
-    return pytesseract.image_to_string(cropped, config='--psm 6').strip()
+    # OCR título
+    cropped_titulo = image.crop(box_titulo)
+    texto_titulo = pytesseract.image_to_string(cropped_titulo, config='--psm 6').strip()
 
-def extract_race_title(image: Image.Image) -> str:
-    box = (315, 265, 880, 290)
-    return extract_text_from_box(image, box)
+    # Tipo sessão
+    tipo_formatado = "❓ Desconhecido"
+    texto_maiusculas = texto_titulo.upper()
+    if "RACE" in texto_maiusculas:
+        tipo_formatado = "🏎 Race"
+    elif "SPRINT" in texto_maiusculas:
+        tipo_formatado = "⚡ Sprint"
+    elif "QUALIFYING" in texto_maiusculas:
+        tipo_formatado = "⏱️ Qualifying"
 
-def corrigir_tempo_ou_gap(raw: str) -> str:
-    raw = raw.replace(';', ':').replace(',', '.').replace(' ', '').strip()
+    # Mensagem principal
+    mensagem = f"🏎 **Título**: {texto_titulo}\n🧱 **Tipo**: {tipo_formatado}"
+    await interaction.followup.send(content=mensagem)
 
-    if re.match(r'^1\d{2}\.\d{3}$', raw):
-        return f"{raw[0]}:{raw[1:]}"
+    # Imagem ampliada da tabela
+    tabela_crop = image.crop(box_tab)
+    tabela_resize = tabela_crop.resize((w_tab * 2, h_tab * 2))
+    resized_width, resized_height = tabela_resize.size
 
-    if re.match(r'^1\d{5}$', raw):
-        return f"{raw[0]}:{raw[1:3]}.{raw[3:]}"
+    draw_linhas = ImageDraw.Draw(tabela_resize)
+    linha_altura = 95
+    espaco = 11
+    resultados = []
 
-    if re.match(r'^\+\d{4}$', raw):
-        return f"+{raw[1]}.{raw[2:]}"
+    for i in range(14):
+        top = i * (linha_altura + espaco)
+        cor = "blue" if i % 2 == 0 else "red"
+        draw_linhas.rectangle([(0, top), (resized_width, top + linha_altura)], outline=cor, width=2)
 
-    return raw
+        nome_box = (0, top, 677, top + linha_altura)
+        equipa_box = (689, top, 689 + 762, top + linha_altura)
+        best_box = (1868, top, 1868 + 342, top + linha_altura)
+        time_box = (2211, top, 2211 + 582, top + linha_altura)
 
-def limpar_nome(nome: str) -> str:
-    nome = nome.strip()
-    nome = re.sub(r'[:;|]+$', '', nome)
-    return nome
+        draw_linhas.rectangle(nome_box, outline="yellow", width=1)
+        draw_linhas.rectangle(equipa_box, outline="green", width=1)
+        draw_linhas.rectangle(best_box, outline="purple", width=1)
+        draw_linhas.rectangle(time_box, outline="orange", width=1)
 
-def extract_column_data(image: Image.Image, base_y: int, linhas: int, x1: int, x2: int, corrigir: bool = False) -> list[str]:
-    dados = []
-    text_height = 22
-    line_height = 40
+        nome_img = tabela_resize.crop(nome_box)
+        equipa_img = tabela_resize.crop(equipa_box).filter(ImageFilter.MedianFilter()).convert("L").point(lambda x: 0 if x < 160 else 255, mode='1')
+        best_img = tabela_resize.crop(best_box)
+        time_img = tabela_resize.crop(time_box)
 
-    for i in range(linhas):
-        y1 = base_y + i * line_height - 2
-        y2 = y1 + text_height
-        box = (x1, y1, x2, y2)
-        texto = extract_text_from_box(image, box)
-        if corrigir:
-            texto = corrigir_tempo_ou_gap(texto)
-        dados.append(texto if texto else "")
+        nome = pytesseract.image_to_string(nome_img, config="--psm 7").strip()
+        equipa = pytesseract.image_to_string(equipa_img, config="--psm 7").strip()
+        best = pytesseract.image_to_string(best_img, config="--psm 7").strip()
+        time = pytesseract.image_to_string(time_img, config="--psm 7").strip()
 
-    return dados
+        # Limpeza e correções
+        nome = re.sub(r'^[^a-zA-Z0-9]*', '', nome)
+
+        equipa = re.sub(r'f?AA', 'M', equipa, flags=re.IGNORECASE)
+        equipa = re.sub(r'[^a-zA-Z0-9\- ]+', '', equipa)
+
+        best = best.replace('L', '1').replace('£', '1').replace(',', '.').replace('°', '.')
+        best = best.replace('S', '5').replace('I', '1').replace('|', '1')
+        best = re.sub(r'[^0-9:.]', '', best)
+        best = re.sub(r'\.{2,}', '.', best)
+        if not ':' in best and len(best) >= 5:
+            best = f"{best[0]}:{best[1:3]}.{best[3:]}"
+
+        time = time.replace('S', '5').replace('I', '1')
+        time = re.sub(r'\s+', ' ', time).strip()
+        time = time.replace('++', '+').replace(' +', '+').replace('+ ', '+')
+        time = re.sub(r'[^0-9+:.a-zA-Z ]', '', time).strip()
+        if re.fullmatch(r'[0-9]{6}', time):
+            time = f"+{time[0]}:{time[1:3]}.{time[3:]}"
+        elif re.fullmatch(r'[0-9]{5}', time):
+            time = f"+0:{time[0:2]}.{time[2:]}"
+
+        resultados.append(f"{i+1:>2}. {nome} | {equipa} | Best: {best} | Time: {time}")
+
+    texto_resultados = "\n".join(resultados)
+    await interaction.followup.send(content=f"```\n{texto_resultados}\n```")
 
 @app_commands.command(name="img", description="Recebe até 2 imagens e marca zonas por colunas")
 @app_commands.describe(
     imagem1="Imagem com o topo da qualificação (1 a 14)",
-    imagem2="Imagem com o fundo da qualificação (15 a 20)"
+    imagem2="Imagem com o fundo da qualificação (15 a 20)",
+    debug="Ativa modo debug para mostrar imagens com boxes marcados"
 )
-async def img_command(interaction: Interaction, imagem1: discord.Attachment, imagem2: discord.Attachment):
+async def img_command(interaction: Interaction, imagem1: discord.Attachment, imagem2: discord.Attachment = None, debug: bool = False):
     await interaction.response.defer()
 
-    def preparar_imagem(img_bytes, incluir_titulo=False, linhas=0, base_y=0):
-        img = Image.open(io.BytesIO(img_bytes))
-        if img.width > 1920 or img.height > 1080:
-            img = img.resize((1920, 1080))
+    image_bytes = await imagem1.read()
+    image = Image.open(io.BytesIO(image_bytes))
 
-        draw = ImageDraw.Draw(img)
+    largura, altura = image.size
+    texto = f"🖈 Resolução: **{largura}x{altura}**\n"
 
-        if incluir_titulo:
-            draw.rectangle([(315, 265), (880, 290)], outline="red", width=2)
+    if largura == 1920 and altura == 1080:
+        resultado = await processar_imagem_16_9(image, interaction)
+    elif largura == 3440 and altura == 1440:
+        resultado = await processar_imagem_21_9(image, interaction, debug)
+    else:
+        resultado = "❌ Resolução desconhecida ou não suportada."
 
-        colunas = {
-            "Driver": (778, 966),
-            "Team": (974, 1175),
-            "Best": (1358, 1485),
-            "Gap": (1490, 1580)
-        }
-
-        text_height = 22
-        line_height = 40
-
-        for i in range(linhas):
-            y1 = base_y + i * line_height - 2
-            y2 = y1 + text_height
-            for _, (x1, x2) in colunas.items():
-                draw.rectangle([(x1, y1), (x2, y2)], outline="green", width=2)
-
-        output = io.BytesIO()
-        img.save(output, format="PNG")
-        output.seek(0)
-        return img, output
-
-    if not imagem1.content_type.startswith("image/") or not imagem2.content_type.startswith("image/"):
-        await interaction.followup.send("❌ Ambas as imagens devem ser válidas.")
-        return
-
-    imagem1_bytes = await imagem1.read()
-    imagem2_bytes = await imagem2.read()
-
-    img1, img1_editada = preparar_imagem(imagem1_bytes, incluir_titulo=True, linhas=14, base_y=375)
-    img2, img2_editada = preparar_imagem(imagem2_bytes, incluir_titulo=False, linhas=6, base_y=690)
-
-    titulo = extract_race_title(img1)
-
-    nomes1 = [limpar_nome(n) for n in extract_column_data(img1, 375, 14, 776, 964)]
-    teams1 = extract_column_data(img1, 375, 14, 972, 1173)
-    bests1 = extract_column_data(img1, 375, 14, 1356, 1483, corrigir=True)
-    gaps1  = extract_column_data(img1, 375, 14, 1488, 1578, corrigir=True)
-
-    nomes2 = [limpar_nome(n) for n in extract_column_data(img2, 690, 6, 776, 964)]
-    teams2 = extract_column_data(img2, 690, 6, 972, 1173)
-    bests2 = extract_column_data(img2, 690, 6, 1356, 1483, corrigir=True)
-    gaps2  = extract_column_data(img2, 690, 6, 1488, 1578, corrigir=True)
-
-    nomes = nomes1 + nomes2
-    teams = teams1 + teams2
-    bests = bests1 + bests2
-    gaps  = gaps1 + gaps2
-
-    file1 = File(fp=img1_editada, filename="imagem_topo_marcada.png")
-    file2 = File(fp=img2_editada, filename="imagem_fundo_marcada.png")
-
-    desconhecidos = [nome for nome in nomes if nome not in PILOTOS_REAIS and nome != ""]
-    mencoes = await perguntar_jogadores_faltantes(interaction, desconhecidos)
-
-    linhas_formatadas = []
-    for i in range(len(nomes)):
-        nome = nomes[i]
-        if nome in mencoes:
-            nome = mencoes[nome]
-        linhas_formatadas.append(f"{i+1:>2}. {nome:<18} | {teams[i]:<16} | {bests[i]:<9} | {gaps[i]}")
-
-    texto = f"\U0001f3c1 **{titulo if titulo else 'Corrida não identificada'}**\n\n" + "\n".join(linhas_formatadas)
-
-    await interaction.followup.send(
-        content=texto,
-        files=[file1, file2]
-    )
+    if resultado:
+        await interaction.followup.send(content=texto + resultado)
