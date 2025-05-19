@@ -2,11 +2,16 @@ import io
 import os
 from google.cloud import vision
 
+from services.vision_usage import pode_usar_vision
+
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "f1-liga-ai-59347f3d41aa.json"
 client = vision.ImageAnnotatorClient()
 
 def ocr_imagem(img) -> str:
     try:
+        if not pode_usar_vision():
+            print("[BLOQUEADO] Limite de uso da API Vision atingido.")
+            return "[LIMITADO]"
         buffer = io.BytesIO()
         img.save(buffer, format="PNG")
         buffer.seek(0)

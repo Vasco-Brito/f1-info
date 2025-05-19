@@ -1,8 +1,10 @@
 import io
 from discord import File
 from PIL import Image
-from services.image_utils import cortar_campos_linha_1440
+from services.image_utils import cortar_campos_linha_1440, cortar_campos_linha_1080
 from services.ocr import ocr_imagem
+from services.vision_usage import registar_pedido
+
 
 async def processar_1440(image_bytes, total_linhas, offset_y, linha_inicial_visual, debug=False):
     print("[DEBUG] processar_1440 chamado.")
@@ -68,6 +70,7 @@ async def processar_1440(image_bytes, total_linhas, offset_y, linha_inicial_visu
 
             texto_final.append(f"{linha['index']:<2} {nome:<15} {equipa:<22} {tempo:<8} {gap}")
 
+        registar_pedido(len(linhas*4))
         mensagem = "OCR completo:\n```markdown\n" + "\n".join(texto_final) + "\n```"
         return mensagem, None
 
@@ -76,15 +79,15 @@ async def processar_1440(image_bytes, total_linhas, offset_y, linha_inicial_visu
         return "❌ Erro ao processar imagem 1440p", None
 
 async def processar_1080(image_bytes, total_linhas, offset_y, linha_inicial_visual, debug=False):
-    print("[DEBUG] processar_1440 chamado.")
+    print("[DEBUG] processar_1080 chamado.")
 
     try:
         img = Image.open(io.BytesIO(image_bytes))
         print("[DEBUG] imagem original aberta.")
 
         # Corte da tabela
-        x, y = 1393, 491
-        largura, altura = 1447, 729
+        x, y = 714, 366
+        largura, altura = 1086, 550
         corte = img.crop((x, y, x + largura, y + altura))
         print(f"[DEBUG] corte principal feito em ({x},{y}) → {largura}x{altura}")
 
@@ -99,7 +102,7 @@ async def processar_1080(image_bytes, total_linhas, offset_y, linha_inicial_visu
             arquivos.append(File(buffer_corte, filename="tabela_corte.png"))
 
             # Cortar e enviar 2 linhas
-            linhas_debug = cortar_campos_linha_1440(
+            linhas_debug = cortar_campos_linha_1080(
                 corte, total_linhas=2,
                 offset_y=offset_y,
                 linha_inicial_visual=linha_inicial_visual
@@ -119,7 +122,7 @@ async def processar_1080(image_bytes, total_linhas, offset_y, linha_inicial_visu
             return "OCR desativado (total_linhas = 0)", None
 
         # OCR real
-        linhas = cortar_campos_linha_1440(
+        linhas = cortar_campos_linha_1080(
             corte,
             total_linhas=total_linhas,
             offset_y=offset_y,
@@ -139,6 +142,7 @@ async def processar_1080(image_bytes, total_linhas, offset_y, linha_inicial_visu
 
             texto_final.append(f"{linha['index']:<2} {nome:<15} {equipa:<22} {tempo:<8} {gap}")
 
+        registar_pedido(len(linhas*4))
         mensagem = "OCR completo:\n```markdown\n" + "\n".join(texto_final) + "\n```"
         return mensagem, None
 

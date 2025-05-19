@@ -1,6 +1,8 @@
 from discord import app_commands, Interaction
 import discord
 from services.image_parser import analisar_imagem
+from services.vision_usage import registar_pedido
+
 
 @app_commands.command(name="img", description="Analisa 2 imagens de qualificação")
 @app_commands.describe(
@@ -18,6 +20,12 @@ async def img_command(
 
     mensagens = []
 
+    offset_y2 = 0
+    if imagem2.width == 3440:
+        offset_y2 = 424
+    else:
+        offset_y2 = 320
+
     # 📄 Imagem 1 → linhas 1 a 14 (começa em cima)
     resultado1, ficheiros1 = await analisar_imagem(
         imagem1,
@@ -32,7 +40,7 @@ async def img_command(
     resultado2, ficheiros2 = await analisar_imagem(
         imagem2,
         total_linhas=6,
-        offset_y=424,
+        offset_y=offset_y2,
         linha_inicial_visual=15,
         debug=debug
     )

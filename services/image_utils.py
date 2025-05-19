@@ -25,3 +25,29 @@ def cortar_campos_linha_1440(
         linhas.append(linha)
 
     return linhas
+
+def cortar_campos_linha_1080(
+    imagem: Image.Image,
+    total_linhas: int,
+    offset_y: int,
+    linha_inicial_visual: int
+) -> list[dict]:
+    linhas = []
+    altura_linha = 36
+    espacamento = 4
+
+    for i in range(total_linhas):
+        y = offset_y + i * (altura_linha + espacamento)
+        linha_real = linha_inicial_visual + i
+
+        linha = {
+            "index": linha_real,
+            "nome": imagem.crop((0, y, 0 + 251, y + altura_linha)),
+            "equipa": imagem.crop((262, y, 262 + 313, y + altura_linha)),
+            "tempo": imagem.crop((761, y, 761 + 156, y + altura_linha)),
+            "gap": imagem.crop((980, y, 980 + 106, y + altura_linha)),
+        }
+
+        linhas.append(linha)
+
+    return linhas
