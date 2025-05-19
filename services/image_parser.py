@@ -1,118 +1,159 @@
 import io
-import os
 from discord import File
 from PIL import Image
-from google.cloud import vision
+from services.image_utils import cortar_campos_linha_1440
+from services.ocr import ocr_imagem
 
-# Definir a chave da Google Vision
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "f1-liga-ai-59347f3d41aa.json"
-
-client = vision.ImageAnnotatorClient()
-
-async def processar_1080(image_bytes):
-    print("[DEBUG] processar_1080 chamado.")
-    return "Imagem no formato 1920x1080 (Full HD)", None
-
-
-async def processar_1440(image_bytes):
+async def processar_1440(image_bytes, total_linhas, offset_y, linha_inicial_visual, debug=False):
     print("[DEBUG] processar_1440 chamado.")
 
     try:
         img = Image.open(io.BytesIO(image_bytes))
         print("[DEBUG] imagem original aberta.")
 
+        # Corte da tabela
         x, y = 1393, 491
         largura, altura = 1447, 729
         corte = img.crop((x, y, x + largura, y + altura))
         print(f"[DEBUG] corte principal feito em ({x},{y}) → {largura}x{altura}")
 
-        total_linhas = 14
-        linhas = cortar_campos_linha_1440(corte, total_linhas)
-        print(f"[DEBUG] {len(linhas)} linhas cortadas com sucesso.")
+        if debug:
+            print(f"[DEBUG] Modo DEBUG → linha inicial visual: {linha_inicial_visual}")
+            arquivos = []
+
+            # Enviar a imagem da tabela
+            buffer_corte = io.BytesIO()
+            corte.save(buffer_corte, format="PNG")
+            buffer_corte.seek(0)
+            arquivos.append(File(buffer_corte, filename="tabela_corte.png"))
+
+            # Cortar e enviar 2 linhas
+            linhas_debug = cortar_campos_linha_1440(
+                corte, total_linhas=2,
+                offset_y=offset_y,
+                linha_inicial_visual=linha_inicial_visual
+            )
+
+            for linha in linhas_debug:
+                for campo in ["nome", "equipa", "tempo", "gap"]:
+                    buffer = io.BytesIO()
+                    linha[campo].save(buffer, format="PNG")
+                    buffer.seek(0)
+                    arquivos.append(File(buffer, filename=f"linha{linha['index']}_{campo}.png"))
+
+            return f"Modo DEBUG — Linhas {linha_inicial_visual}-{linha_inicial_visual + 1}", arquivos
+
+        if total_linhas == 0:
+            print("[DEBUG] total_linhas = 0 → OCR desativado.")
+            return "OCR desativado (total_linhas = 0)", None
+
+        # OCR real
+        linhas = cortar_campos_linha_1440(
+            corte,
+            total_linhas=total_linhas,
+            offset_y=offset_y,
+            linha_inicial_visual=linha_inicial_visual
+        )
+
+        print(f"[DEBUG] {len(linhas)} linhas cortadas (iniciando OCR)")
 
         texto_final = []
 
         for linha in linhas:
-            print(f"[DEBUG] OCR para linha {linha['index']}")
-
+            print(f"[DEBUG] OCR linha {linha['index']}")
             nome = ocr_imagem(linha["nome"])
             equipa = ocr_imagem(linha["equipa"])
             tempo = ocr_imagem(linha["tempo"])
             gap = ocr_imagem(linha["gap"])
 
-            print(f"[DEBUG] → {nome} | {equipa} | {tempo} | {gap}")
-
             texto_final.append(f"{linha['index']:<2} {nome:<15} {equipa:<22} {tempo:<8} {gap}")
 
-        mensagem = "Corte 1440p concluído com OCR:\n```markdown\n" + "\n".join(texto_final) + "\n```"
-        print("[DEBUG] OCR finalizado com sucesso.")
+        mensagem = "OCR completo:\n```markdown\n" + "\n".join(texto_final) + "\n```"
         return mensagem, None
 
     except Exception as e:
         print(f"[ERROR] Erro em processar_1440: {e}")
         return "❌ Erro ao processar imagem 1440p", None
 
+async def processar_1080(image_bytes, total_linhas, offset_y, linha_inicial_visual, debug=False):
+    print("[DEBUG] processar_1440 chamado.")
 
-# Decide o que fazer conforme resolução
-async def analisar_imagem(attachment):
+    try:
+        img = Image.open(io.BytesIO(image_bytes))
+        print("[DEBUG] imagem original aberta.")
+
+        # Corte da tabela
+        x, y = 1393, 491
+        largura, altura = 1447, 729
+        corte = img.crop((x, y, x + largura, y + altura))
+        print(f"[DEBUG] corte principal feito em ({x},{y}) → {largura}x{altura}")
+
+        if debug:
+            print(f"[DEBUG] Modo DEBUG → linha inicial visual: {linha_inicial_visual}")
+            arquivos = []
+
+            # Enviar a imagem da tabela
+            buffer_corte = io.BytesIO()
+            corte.save(buffer_corte, format="PNG")
+            buffer_corte.seek(0)
+            arquivos.append(File(buffer_corte, filename="tabela_corte.png"))
+
+            # Cortar e enviar 2 linhas
+            linhas_debug = cortar_campos_linha_1440(
+                corte, total_linhas=2,
+                offset_y=offset_y,
+                linha_inicial_visual=linha_inicial_visual
+            )
+
+            for linha in linhas_debug:
+                for campo in ["nome", "equipa", "tempo", "gap"]:
+                    buffer = io.BytesIO()
+                    linha[campo].save(buffer, format="PNG")
+                    buffer.seek(0)
+                    arquivos.append(File(buffer, filename=f"linha{linha['index']}_{campo}.png"))
+
+            return f"Modo DEBUG — Linhas {linha_inicial_visual}-{linha_inicial_visual + 1}", arquivos
+
+        if total_linhas == 0:
+            print("[DEBUG] total_linhas = 0 → OCR desativado.")
+            return "OCR desativado (total_linhas = 0)", None
+
+        # OCR real
+        linhas = cortar_campos_linha_1440(
+            corte,
+            total_linhas=total_linhas,
+            offset_y=offset_y,
+            linha_inicial_visual=linha_inicial_visual
+        )
+
+        print(f"[DEBUG] {len(linhas)} linhas cortadas (iniciando OCR)")
+
+        texto_final = []
+
+        for linha in linhas:
+            print(f"[DEBUG] OCR linha {linha['index']}")
+            nome = ocr_imagem(linha["nome"])
+            equipa = ocr_imagem(linha["equipa"])
+            tempo = ocr_imagem(linha["tempo"])
+            gap = ocr_imagem(linha["gap"])
+
+            texto_final.append(f"{linha['index']:<2} {nome:<15} {equipa:<22} {tempo:<8} {gap}")
+
+        mensagem = "OCR completo:\n```markdown\n" + "\n".join(texto_final) + "\n```"
+        return mensagem, None
+
+    except Exception as e:
+        print(f"[ERROR] Erro em processar_1440: {e}")
+        return "❌ Erro ao processar imagem 1440p", None
+
+async def analisar_imagem(attachment, total_linhas, offset_y, linha_inicial_visual, debug=False):
     image_bytes = await attachment.read()
     img = Image.open(io.BytesIO(image_bytes))
     largura, altura = img.size
 
     if (largura, altura) == (3440, 1440):
-        texto, ficheiro = await processar_1440(image_bytes)
-        ficheiro = [ficheiro] if ficheiro else []
-        return texto, ficheiro
-    elif (largura, altura) == (1920, 1080):
-        texto, ficheiro = await processar_1080(image_bytes)
-    else:
-        texto = f"Imagem num formato inesperado: {largura}x{altura}"
-        ficheiro = File(io.BytesIO(image_bytes), filename=attachment.filename)
+        return await processar_1440(image_bytes, total_linhas, offset_y, linha_inicial_visual, debug)
+    if (largura, altura) == (1920, 1080):
+        return await processar_1080(image_bytes, total_linhas, offset_y, linha_inicial_visual, debug)
 
-    return f"🖼️ **{attachment.filename}** → {texto}", [ficheiro]
-
-def ocr_imagem(img: Image.Image) -> str:
-    try:
-        buffer = io.BytesIO()
-        img.save(buffer, format="PNG")
-        buffer.seek(0)
-        image = vision.Image(content=buffer.read())
-        response = client.text_detection(image=image)
-
-        if response.error.message:
-            print(f"[ERROR] Vision API: {response.error.message}")
-            return ""
-
-        if response.text_annotations:
-            texto = response.text_annotations[0].description.strip()
-            print(f"[DEBUG] OCR → '{texto}'")
-            return texto
-
-        print("[DEBUG] OCR → nenhum texto detectado")
-        return ""
-
-    except Exception as e:
-        print(f"[ERROR] Erro em ocr_imagem: {e}")
-        return ""
-
-
-# Corta os campos nome/equipa/tempo/gap por linha
-def cortar_campos_linha_1440(imagem: Image.Image, total_linhas: int = 2) -> list[dict]:
-    linhas = []
-    altura_linha = 45
-    espacamento = 8
-
-    for i in range(total_linhas):
-        y = i * (altura_linha + espacamento)
-
-        linha = {
-            "index": i + 1,
-            "nome": imagem.crop((0, y, 0 + 332, y + altura_linha)),
-            "equipa": imagem.crop((350, y, 350 + 421, y + altura_linha)),  # já ajustado!
-            "tempo": imagem.crop((1034, y, 1034 + 239, y + altura_linha)),
-            "gap": imagem.crop((1334, y, 1334 + 113, y + altura_linha)),
-        }
-
-        linhas.append(linha)
-
-    return linhas
+    return "❌ Resolução inválida ou não suportada", []
