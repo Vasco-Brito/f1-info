@@ -1,0 +1,229 @@
+{
+  "corrida": {
+    "data": "2025-05-25_20-44-09",
+    "tipo": "Corrida ou Qualificação",
+    "resultado": [
+      {
+        "posicao": 1,
+        "nome": "TazWanted",
+        "ia": false,
+        "voltas": 4,
+        "grid": 1,
+        "pontos": 0,
+        "melhor_volta": 76.075,
+        "tempo_total": 393.819
+      },
+      {
+        "posicao": 0,
+        "nome": "Default Ghost",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Personal Best",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Adrian_44™",
+        "ia": true,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      }
+    ],
+    "penalizacoes": []
+  }
+}

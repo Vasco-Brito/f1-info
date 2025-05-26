@@ -6,10 +6,12 @@ USO_PATH = "jsons/vision_usage.json"
 LIMITE_MENSAL = 1000
 
 def carregar_uso():
+    os.makedirs(os.path.dirname(USO_PATH), exist_ok=True)
     if not os.path.exists(USO_PATH):
         return {}
     with open(USO_PATH, "r") as f:
         return json.load(f)
+
 
 def guardar_uso(dados):
     with open(USO_PATH, "w") as f:

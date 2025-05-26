@@ -1,4 +1,6 @@
 # bot.py
+import asyncio
+
 import discord
 from discord.ext import commands
 
@@ -8,7 +10,7 @@ from config import DISCORD_TOKEN
 from commands.standings import register_standings_command
 from commands.next_race import register_next_command
 from commands.constructor_standings import register_constructor_standings
-from utils.keep_alive import keep_alive
+from telemetry.monitor import monitor_telemetry
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -21,6 +23,7 @@ async def on_ready():
     try:
         synced = await bot.tree.sync()
         print(f"✅ Comandos slash sincronizados: {len(synced)}")
+        asyncio.create_task(monitor_telemetry(bot))
     except Exception as e:
         print(f"❌ Erro ao sincronizar comandos: {e}")
 

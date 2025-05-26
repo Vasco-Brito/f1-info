@@ -8,12 +8,14 @@ from services.vision_usage import registar_pedido
 @app_commands.describe(
     imagem1="Imagem principal (linhas 1-14)",
     imagem2="Imagem complementar (linhas 15-20)",
+    tipo="Tipo do OCR",
     debug="Ativa modo DEBUG para enviar os cortes como imagens"
 )
 async def img_command(
     interaction: Interaction,
     imagem1: discord.Attachment,
     imagem2: discord.Attachment,
+    tipo: int = 1,
     debug: bool = False
 ):
     await interaction.response.defer()
@@ -32,7 +34,8 @@ async def img_command(
         total_linhas=14,
         offset_y=0,
         linha_inicial_visual=1,
-        debug=debug
+        debug=debug,
+        tipo=tipo,
     )
     mensagens.append((resultado1, ficheiros1))
 
@@ -42,7 +45,8 @@ async def img_command(
         total_linhas=6,
         offset_y=offset_y2,
         linha_inicial_visual=15,
-        debug=debug
+        debug=debug,
+        tipo=tipo,
     )
     mensagens.append((resultado2, ficheiros2))
 
