@@ -173,4 +173,5 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-f1-liga-ai-59347f3d41aa.json
+#TODO: Remover depois talvez
+# f1-liga-ai-59347f3d41aa.json
