@@ -10,7 +10,6 @@ from config import DISCORD_TOKEN
 from commands.standings import register_standings_command
 from commands.next_race import register_next_command
 from commands.constructor_standings import register_constructor_standings
-from telemetry.monitor import monitor_telemetry
 from telemetry.telemetryAPI import start_api
 
 intents = discord.Intents.default()
