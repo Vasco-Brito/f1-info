@@ -1,4 +1,3 @@
-# bot.py
 import asyncio
 
 import discord
@@ -10,7 +9,7 @@ from config import DISCORD_TOKEN
 from commands.standings import register_standings_command
 from commands.next_race import register_next_command
 from commands.constructor_standings import register_constructor_standings
-from telemetry.telemetryAPI import start_api
+from telemetry.udp_listener import monitor_telemetry
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -23,10 +22,12 @@ async def on_ready():
     try:
         synced = await bot.tree.sync()
         print(f"✅ Comandos slash sincronizados: {len(synced)}")
-        start_api()
-        # asyncio.create_task(monitor_telemetry(bot))
+        # start_api()
+        asyncio.create_task(monitor_telemetry(bot))
     except Exception as e:
         print(f"❌ Erro ao sincronizar comandos: {e}")
+
+
 
 
 #TODO: Exemplo de comando direto no bot.py (temporário)
