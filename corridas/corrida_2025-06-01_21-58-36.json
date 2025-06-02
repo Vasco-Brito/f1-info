@@ -1,0 +1,255 @@
+{
+  "corrida": {
+    "data": "2025-06-01_21-58-36",
+    "tipo": "Corrida",
+    "resultado": [
+      {
+        "posicao": 17,
+        "nome": "VERSTAPPEN",
+        "ia": 1,
+        "voltas": 24,
+        "grid": 4,
+        "pontos": 0,
+        "melhor_volta": 75.94,
+        "tempo_total": 1970.692
+      },
+      {
+        "posicao": 8,
+        "nome": "HAMILTON",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 12,
+        "pontos": 4,
+        "melhor_volta": 76.828,
+        "tempo_total": 2005.31
+      },
+      {
+        "posicao": 16,
+        "nome": "LECLERC",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 11,
+        "pontos": 0,
+        "melhor_volta": 76.966,
+        "tempo_total": 2023.277
+      },
+      {
+        "posicao": 9,
+        "nome": "SAINZ",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 13,
+        "pontos": 2,
+        "melhor_volta": 76.905,
+        "tempo_total": 2005.479
+      },
+      {
+        "posicao": 6,
+        "nome": "NORRIS",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 8,
+        "pontos": 8,
+        "melhor_volta": 76.565,
+        "tempo_total": 1999.575
+      },
+      {
+        "posicao": 11,
+        "nome": "PIASTRI",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 14,
+        "pontos": 0,
+        "melhor_volta": 76.781,
+        "tempo_total": 2006.094
+      },
+      {
+        "posicao": 19,
+        "nome": "ALONSO",
+        "ia": 1,
+        "voltas": 14,
+        "grid": 6,
+        "pontos": 0,
+        "melhor_volta": 76.727,
+        "tempo_total": 1191.407
+      },
+      {
+        "posicao": 13,
+        "nome": "OCON",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 18,
+        "pontos": 0,
+        "melhor_volta": 77.201,
+        "tempo_total": 2012.402
+      },
+      {
+        "posicao": 14,
+        "nome": "GASLY",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 17,
+        "pontos": 0,
+        "melhor_volta": 76.862,
+        "tempo_total": 2012.459
+      },
+      {
+        "posicao": 4,
+        "nome": "ALBON",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 5,
+        "pontos": 12,
+        "melhor_volta": 76.638,
+        "tempo_total": 1998.79
+      },
+      {
+        "posicao": 12,
+        "nome": "SARGEANT",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 16,
+        "pontos": 0,
+        "melhor_volta": 76.532,
+        "tempo_total": 2006.496
+      },
+      {
+        "posicao": 15,
+        "nome": "TSUNODA",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 20,
+        "pontos": 0,
+        "melhor_volta": 76.787,
+        "tempo_total": 2012.717
+      },
+      {
+        "posicao": 7,
+        "nome": "BOTTAS",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 10,
+        "pontos": 6,
+        "melhor_volta": 76.851,
+        "tempo_total": 2004.983
+      },
+      {
+        "posicao": 5,
+        "nome": "ZHOU",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 7,
+        "pontos": 10,
+        "melhor_volta": 76.459,
+        "tempo_total": 1999.091
+      },
+      {
+        "posicao": 10,
+        "nome": "HULKENBERG",
+        "ia": 1,
+        "voltas": 25,
+        "grid": 15,
+        "pontos": 1,
+        "melhor_volta": 76.868,
+        "tempo_total": 2005.769
+      },
+      {
+        "posicao": 2,
+        "nome": "Yorha",
+        "ia": 0,
+        "voltas": 25,
+        "grid": 2,
+        "pontos": 18,
+        "melhor_volta": 73.024,
+        "tempo_total": 1975.753
+      },
+      {
+        "posicao": 1,
+        "nome": "TazWanted",
+        "ia": 0,
+        "voltas": 25,
+        "grid": 1,
+        "pontos": 26,
+        "melhor_volta": 72.453,
+        "tempo_total": 1968.882
+      },
+      {
+        "posicao": 3,
+        "nome": "Louis33616",
+        "ia": 0,
+        "voltas": 25,
+        "grid": 3,
+        "pontos": 15,
+        "melhor_volta": 73.117,
+        "tempo_total": 1977.128
+      },
+      {
+        "posicao": 18,
+        "nome": "Fomigaa",
+        "ia": 0,
+        "voltas": 24,
+        "grid": 9,
+        "pontos": 0,
+        "melhor_volta": 76.119,
+        "tempo_total": 1968.969
+      },
+      {
+        "posicao": 20,
+        "nome": "darksn4o",
+        "ia": 1,
+        "voltas": 11,
+        "grid": 19,
+        "pontos": 0,
+        "melhor_volta": 77.801,
+        "tempo_total": 1063.818
+      },
+      {
+        "posicao": 0,
+        "nome": "Carro 20",
+        "ia": 0,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": "Carro 21",
+        "ia": 0,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      }
+    ],
+    "penalizacoes": [],
+    "voltas_concluidas": {
+      "2": "TazWanted",
+      "3": "TazWanted",
+      "4": "TazWanted",
+      "5": "TazWanted",
+      "6": "TazWanted",
+      "7": "TazWanted",
+      "8": "TazWanted",
+      "9": "TazWanted",
+      "10": "Yorha",
+      "11": "Yorha",
+      "12": "Yorha",
+      "13": "TazWanted",
+      "14": "TazWanted",
+      "15": "TazWanted",
+      "16": "TazWanted",
+      "17": "TazWanted",
+      "18": "TazWanted",
+      "19": "TazWanted",
+      "20": "TazWanted",
+      "21": "Yorha",
+      "22": "Yorha",
+      "23": "TazWanted",
+      "24": "TazWanted",
+      "25": "TazWanted"
+    }
+  }
+}

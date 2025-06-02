@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 
 from commands.liga.img_parser import img_command
+from commands.liga.registar import register_registar_command
 from commands.liga.votacao import register_votacao_command
 from config import DISCORD_TOKEN
 from commands.standings import register_standings_command
@@ -22,8 +23,8 @@ async def on_ready():
     try:
         synced = await bot.tree.sync()
         print(f"✅ Comandos slash sincronizados: {len(synced)}")
-        # start_api()
         asyncio.create_task(monitor_telemetry(bot))
+        # start_api()
     except Exception as e:
         print(f"❌ Erro ao sincronizar comandos: {e}")
 
@@ -39,6 +40,7 @@ register_next_command(bot)
 register_standings_command(bot)
 register_constructor_standings(bot)
 register_votacao_command(bot)
+register_registar_command(bot)
 bot.tree.add_command(img_command)
 
 # keep_alive()

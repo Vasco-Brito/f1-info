@@ -1,0 +1,230 @@
+{
+  "corrida": {
+    "data": "2025-06-01_21-19-16",
+    "tipo": "Corrida",
+    "resultado": [
+      {
+        "posicao": 5,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.222,
+        "tempo_total": 158.588
+      },
+      {
+        "posicao": 12,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.621,
+        "tempo_total": 159.775
+      },
+      {
+        "posicao": 11,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.579,
+        "tempo_total": 161.196
+      },
+      {
+        "posicao": 13,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.768,
+        "tempo_total": 161.802
+      },
+      {
+        "posicao": 9,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.475,
+        "tempo_total": 159.259
+      },
+      {
+        "posicao": 14,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.801,
+        "tempo_total": 159.863
+      },
+      {
+        "posicao": 7,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.404,
+        "tempo_total": 159.24
+      },
+      {
+        "posicao": 18,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 75.094,
+        "tempo_total": 160.859
+      },
+      {
+        "posicao": 17,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 3,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.931,
+        "tempo_total": 232.818
+      },
+      {
+        "posicao": 6,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 3,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.353,
+        "tempo_total": 235.362
+      },
+      {
+        "posicao": 16,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 3,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.894,
+        "tempo_total": 236.131
+      },
+      {
+        "posicao": 20,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 1,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 86.192,
+        "tempo_total": 162.411
+      },
+      {
+        "posicao": 10,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.498,
+        "tempo_total": 161.301
+      },
+      {
+        "posicao": 8,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 74.474,
+        "tempo_total": 160.931
+      },
+      {
+        "posicao": 15,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 2,
+        "grid": 1,
+        "pontos": 0,
+        "melhor_volta": 74.822,
+        "tempo_total": 239.381
+      },
+      {
+        "posicao": 2,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 8,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 71.72,
+        "tempo_total": 738.955
+      },
+      {
+        "posicao": 1,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 7,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 70.358,
+        "tempo_total": 543.17
+      },
+      {
+        "posicao": 3,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 4,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 72.214,
+        "tempo_total": 298.784
+      },
+      {
+        "posicao": 4,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 4,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 73.733,
+        "tempo_total": 368.834
+      },
+      {
+        "posicao": 19,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 5,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 78.383,
+        "tempo_total": 432.286
+      },
+      {
+        "posicao": 0,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      },
+      {
+        "posicao": 0,
+        "nome": " ",
+        "ia": -1,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0
+      }
+    ],
+    "penalizacoes": [],
+    "voltas_concluidas": {}
+  }
+}

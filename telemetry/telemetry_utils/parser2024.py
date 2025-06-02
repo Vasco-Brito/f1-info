@@ -934,3 +934,61 @@ HEADER_FIELD_TO_PACKET_TYPE = {
     13:PacketMotionExData,
     14:PacketTimeTrialData
 }
+
+from telemetry.telemetry_utils.race_tracker import RaceTracker
+
+race_tracker = None
+ultima_volta_registada = {}
+player_data = {}
+
+def processar_pacote(header, packet):
+    global race_tracker, ultima_volta_registada, player_data
+
+    packet_id = header.m_packet_id
+
+    if packet_id == 1:  # PacketSessionData
+        session_type = packet.m_session_type
+        if session_type == 10 and race_tracker is None:  # 10 = Race
+            nome_corrida = f"Track {packet.m_track_id}"
+            race_tracker = RaceTracker(nome_corrida)
+            print(f"[TRACKER] Iniciado tracking para {nome_corrida}")
+
+    elif packet_id == 4:  # PacketParticipantsData
+        for idx, p in enumerate(packet.m_participants):
+            nome = p.m_name.decode('utf-8').rstrip('\x00')
+            player_data[idx] = nome
+        print(f"[TRACKER] Dados dos pilotos registados: {player_data}")
+
+    elif packet_id == 2 and race_tracker:  # PacketLapData
+        lap_data = packet.m_lap_data
+
+        for idx, car in enumerate(lap_data):
+            volta_atual = car.m_current_lap_num
+            if idx not in ultima_volta_registada or volta_atual > ultima_volta_registada[idx]:
+                ultima_volta_registada[idx] = volta_atual
+
+        lider_idx = min(range(len(lap_data)), key=lambda i: lap_data[i].m_car_position)
+        nome_lider = player_data.get(lider_idx, f"Car_{lider_idx}")
+        volta_lider = lap_data[lider_idx].m_current_lap_num
+
+        race_tracker.registrar_lider_volta(nome_lider, volta_lider)
+
+    elif packet_id == 8 and race_tracker:  # PacketFinalClassificationData
+        resultados = []
+        for idx, car in enumerate(packet.m_classification_data):
+            nick = player_data.get(idx, f"Car_{idx}")
+            pos = car.m_position
+            penalizacao = car.m_penalties_time
+            avisos = car.m_num_penalties
+            resultados.append({
+                "nick": nick,
+                "pos": pos,
+                "penalizacao": penalizacao,
+                "avisos": avisos
+            })
+
+        race_tracker.registrar_resultados_finais(resultados)
+        race_tracker.end_race_tracking()
+        race_tracker = None
+        print("[TRACKER] Corrida registada com sucesso")
+

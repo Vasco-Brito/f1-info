@@ -4,21 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2e0ca452-3959-4737-b2f9-6032723d652e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/Player.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/Session.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/dictionnaries.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/packet_management.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/parser2024.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telemetry/udp_listener.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+    <list default="true" id="562f704a-104d-4eef-85a3-bb4025719d70" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/commands/liga/registar.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/race_tracker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/f1-info.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/f1-info.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telemetry/telemetryAPI.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/telemetry/telemetry_utils/parser2024.py" beforeDir="false" afterPath="$PROJECT_DIR$/telemetry/telemetry_utils/parser2024.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telemetry/udp_listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/telemetry/udp_listener.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,11 +29,23 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 3
-}</component>
-  <component name="ProjectId" id="2xrXTnGoImxE4SsZadQomuZiFxf" />
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Vasco-Brito"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Vasco-Brito/f1-info.git",
+    "accountId": "a2743695-4c2a-4796-9308-60384775e8a2"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2xv7YAFpj2cvaN4vdGRDrxhrkez" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -52,20 +58,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "image-parser",
-    "last_opened_file_path": "S:/Programação/Projetos/Python/f1-info/telemetry",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="S:\Programação\Projetos\Python\f1-info\telemetry" />
-      <recent name="S:\Programação\Projetos\Python\f1-info\telemetry\telemetry_utils" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="S:\Programação\Projetos\Python\f1-info\telemetry" />
-      <recent name="S:\Programação\Projetos\Python\f1-info\telemetry\TelemetryUtils" />
-    </key>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -75,11 +70,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2e0ca452-3959-4737-b2f9-6032723d652e" name="Changes" comment="" />
-      <created>1748697176407</created>
+      <changelist id="562f704a-104d-4eef-85a3-bb4025719d70" name="Changes" comment="" />
+      <created>1748806738869</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1748697176407</updated>
+      <updated>1748806738869</updated>
     </task>
     <servers />
   </component>

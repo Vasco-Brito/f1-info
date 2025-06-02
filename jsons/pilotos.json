@@ -1,0 +1,42 @@
+{
+  "199582033809244161": {
+    "nick": "TazWanted",
+    "numero": 45,
+    "equipa": "Red Bull",
+    "piloto_replacable": "Perez",
+    "discordId": "199582033809244161",
+    "isAdmin": true
+  },
+  "769555637721235471": {
+    "nick": "Fomigaa",
+    "numero": 25,
+    "equipa": "Haas",
+    "piloto_replacable": "Magnussen",
+    "discordId": "769555637721235471",
+    "isAdmin": false
+  },
+  "322841664743800843": {
+    "nick": "Yorha",
+    "numero": 19,
+    "equipa": "Aston Martin",
+    "piloto_replacable": "Stroll",
+    "discordId": "322841664743800843",
+    "isAdmin": true
+  },
+  "672170854783778828": {
+    "nick": "Louis33616",
+    "numero": 13,
+    "equipa": "Mercedes",
+    "piloto_replacable": "Russell",
+    "discordId": "672170854783778828",
+    "isAdmin": false
+  },
+  "488678439725957120": {
+    "nick": "darksn4o",
+    "numero": 32,
+    "equipa": "Racing Bulls",
+    "piloto_replacable": "Ricciardo",
+    "discordId": "488678439725957120",
+    "isAdmin": false
+  }
+}
