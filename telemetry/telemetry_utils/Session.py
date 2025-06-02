@@ -1,4 +1,5 @@
-from telemetry.telemetry_utils.dictionnaries import session_dictionary, conversion, track_dictionary, weather_dictionary, color_flag_dict
+from telemetry.telemetry_utils.dictionnaries import conversion, track_dictionary, weather_dictionary, color_flag_dict, \
+    get_nome_abreviado
 
 
 class WeatherForecastSample:
@@ -58,8 +59,8 @@ class Session:
         if self.Seance == 18:
             string = f"Time Trial : {track_dictionary[self.track][0]}"
         elif self.Seance in [15,16,17]:
-            string = f"Session : {session_dictionary[self.Seance]}, Lap : {self.currentLap}/{self.nbLaps}, " \
-                        f"Air : {self.airTemperature}°C / Track : {self.trackTemperature}°C"
+            string = f"Session : {get_nome_abreviado(self.Seance)}, Lap : {self.currentLap}/{self.nbLaps}, " \
+                     f"Air : {self.airTemperature}°C / Track : {self.trackTemperature}°C"
         elif self.Seance in [5,6,7,8,9]:
             string = f" Qualy : {conversion(self.time_left, 1)}"
         else:

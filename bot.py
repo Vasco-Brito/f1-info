@@ -32,7 +32,7 @@ async def on_ready():
 
 
 #TODO: Exemplo de comando direto no bot.py (temporário)
-@bot.tree.command(name="ping", description="Verifica se o bot está online")
+@bot.tree.command(name="ping", description="Verif3ica se o bot está online")
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("🏓 Pong!")
 

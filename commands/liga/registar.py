@@ -7,6 +7,7 @@ NUMEROS_PROIBIDOS = {
     1, 2, 3, 4, 5, 6, 10, 11, 14, 16, 17, 18, 20, 21, 22,
     24, 27, 31, 42, 44, 47, 55, 63, 81, 87, 88
 }
+DriverRole = 1353338452975812709
 
 EQUIPAS_ROLE_ID = {
     "McLaren": 1352324048150855891,
@@ -145,8 +146,9 @@ def register_registar_command(bot):
         role_id = EQUIPAS_ROLE_ID.get(equipa)
         if role_id:
             role = interaction.guild.get_role(role_id)
+            driverRole = interaction.guild.get_role(DriverRole)
             if role:
-                await interaction.user.add_roles(role)
+                await interaction.user.add_roles(role, driverRole)
 
         await interaction.response.send_message(
             f"✅ Registado como **{novo_nick}** pela equipa **{equipa}** (substituindo **{piloto_replacable}**).",

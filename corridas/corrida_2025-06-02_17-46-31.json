@@ -1,0 +1,472 @@
+{
+  "corrida": {
+    "data": "2025-06-02_17-46-31",
+    "tipo": "Corrida principal",
+    "session_uid": 2808265537739096304,
+    "resultado": [
+      {
+        "idx": 0,
+        "posicao": 9,
+        "nome": "RUSSELL",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 12,
+        "pontos": 2,
+        "melhor_volta": 67.54,
+        "tempo_total": 223.924,
+        "DNF": 0,
+        "velocidade_maxima": 307.19,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 1,
+        "posicao": 14,
+        "nome": "SARGEANT",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 17,
+        "pontos": 0,
+        "melhor_volta": 67.878,
+        "tempo_total": 233.29,
+        "DNF": 0,
+        "velocidade_maxima": 314.66,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 2,
+        "posicao": 19,
+        "nome": "GASLY",
+        "ia": 1,
+        "voltas": 1,
+        "grid": 18,
+        "pontos": 0,
+        "melhor_volta": 76.093,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 309.14,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 3,
+        "posicao": 7,
+        "nome": "PIASTRI",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 6,
+        "pontos": 7,
+        "melhor_volta": 67.162,
+        "tempo_total": 220.252,
+        "DNF": 0,
+        "velocidade_maxima": 306.28,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 4,
+        "posicao": 16,
+        "nome": "HULKENBERG",
+        "ia": 1,
+        "voltas": 1,
+        "grid": 14,
+        "pontos": 0,
+        "melhor_volta": 75.164,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 305.54,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 5,
+        "posicao": 4,
+        "nome": "LECLERC",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 3,
+        "pontos": 12,
+        "melhor_volta": 68.939,
+        "tempo_total": 218.177,
+        "DNF": 0,
+        "velocidade_maxima": 315.51,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 6,
+        "posicao": 13,
+        "nome": "OCON",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 20,
+        "pontos": 0,
+        "melhor_volta": 67.868,
+        "tempo_total": 232.506,
+        "DNF": 0,
+        "velocidade_maxima": 308.24,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 7,
+        "posicao": 1,
+        "nome": "SAINZ",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 1,
+        "pontos": 25,
+        "melhor_volta": 67.639,
+        "tempo_total": 205.435,
+        "DNF": 0,
+        "velocidade_maxima": 303.4,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 8,
+        "posicao": 20,
+        "nome": "BOTTAS",
+        "ia": 1,
+        "voltas": 1,
+        "grid": 16,
+        "pontos": 0,
+        "melhor_volta": 76.472,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 311.71,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 9,
+        "posicao": 12,
+        "nome": "ALONSO",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 11,
+        "pontos": 0,
+        "melhor_volta": 67.253,
+        "tempo_total": 228.176,
+        "DNF": 0,
+        "velocidade_maxima": 307.69,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 10,
+        "posicao": 8,
+        "nome": "RICCIARDO",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 8,
+        "pontos": 4,
+        "melhor_volta": 67.57,
+        "tempo_total": 221.972,
+        "DNF": 0,
+        "velocidade_maxima": 307.69,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 11,
+        "posicao": 15,
+        "nome": "ZHOU",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 19,
+        "pontos": 0,
+        "melhor_volta": 68.013,
+        "tempo_total": 234.753,
+        "DNF": 0,
+        "velocidade_maxima": 307.23,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 12,
+        "posicao": 10,
+        "nome": "HAMILTON",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 10,
+        "pontos": 1,
+        "melhor_volta": 68.085,
+        "tempo_total": 224.293,
+        "DNF": 0,
+        "velocidade_maxima": 313.09,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 13,
+        "posicao": 18,
+        "nome": "ALBON",
+        "ia": 1,
+        "voltas": 1,
+        "grid": 13,
+        "pontos": 0,
+        "melhor_volta": 75.767,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 307.3,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 14,
+        "posicao": 5,
+        "nome": "PÉREZ",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 4,
+        "pontos": 10,
+        "melhor_volta": 69.891,
+        "tempo_total": 219.42,
+        "DNF": 0,
+        "velocidade_maxima": 314.72,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 15,
+        "posicao": 17,
+        "nome": "MAGNUSSEN",
+        "ia": 1,
+        "voltas": 1,
+        "grid": 15,
+        "pontos": 0,
+        "melhor_volta": 75.464,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 306.75,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 16,
+        "posicao": 6,
+        "nome": "STROLL",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 9,
+        "pontos": 8,
+        "melhor_volta": 67.9,
+        "tempo_total": 219.573,
+        "DNF": 0,
+        "velocidade_maxima": 308.12,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 17,
+        "posicao": 3,
+        "nome": "TSUNODA",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 7,
+        "pontos": 15,
+        "melhor_volta": 68.824,
+        "tempo_total": 217.873,
+        "DNF": 0,
+        "velocidade_maxima": 309.18,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 18,
+        "posicao": 2,
+        "nome": "NORRIS",
+        "ia": 1,
+        "voltas": 3,
+        "grid": 2,
+        "pontos": 18,
+        "melhor_volta": 67.29,
+        "tempo_total": 208.481,
+        "DNF": 0,
+        "velocidade_maxima": 307.76,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 19,
+        "posicao": 11,
+        "nome": "VERSTAPPEN",
+        "ia": 0,
+        "voltas": 3,
+        "grid": 5,
+        "pontos": 0,
+        "melhor_volta": 70.141,
+        "tempo_total": 218.841,
+        "DNF": 0,
+        "velocidade_maxima": 304.6,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 20,
+        "posicao": 0,
+        "nome": "Carro 20",
+        "ia": 0,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 0.0,
+        "compostos_usados": [],
+        "pitstops": []
+      },
+      {
+        "idx": 21,
+        "posicao": 0,
+        "nome": "Carro 21",
+        "ia": 0,
+        "voltas": 0,
+        "grid": 0,
+        "pontos": 0,
+        "melhor_volta": 0.0,
+        "tempo_total": 0.0,
+        "DNF": 0,
+        "velocidade_maxima": 0.0,
+        "compostos_usados": [],
+        "pitstops": []
+      }
+    ],
+    "penalizacoes": [],
+    "voltas_concluidas": {
+      "2": "SAINZ",
+      "3": "SAINZ"
+    },
+    "colisoes": [
+      {
+        "timestamp": "2025-06-02T18:42:17.993992",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:42:25.646585",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:42:43.548392",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:42:47.634240",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:42:51.667637",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:42.564637",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:44.004367",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:48.955574",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:50.722838",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:54.513685",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:58.528263",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:59.208633",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:43:59.673051",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:02.557220",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:03.218836",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:03.708982",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:06.576094",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:07.223323",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:07.732417",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:10.598265",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:11.246401",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:11.742354",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:14.603887",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:15.252437",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:15.760803",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:18.610717",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:19.259435",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:44:19.845751",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:45:37.859820",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:45:55.513182",
+        "descricao": "Colisão registada"
+      },
+      {
+        "timestamp": "2025-06-02T18:46:15.587884",
+        "descricao": "Colisão registada"
+      }
+    ],
+    "safety_car": 0,
+    "red_flag": 0
+  }
+}
