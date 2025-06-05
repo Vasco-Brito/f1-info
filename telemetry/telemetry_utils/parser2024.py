@@ -479,6 +479,9 @@ class Collision(Packet):
     _fields_ = [
         ("m_vehicle1Idx", ctypes.c_uint8),
         ("m_vehicle2Idx", ctypes.c_uint8),
+        ("m_collisionType", ctypes.c_uint8),
+        ("m_fault", ctypes.c_uint8),
+        ("m_penaltyType", ctypes.c_uint8)
     ]
 
 

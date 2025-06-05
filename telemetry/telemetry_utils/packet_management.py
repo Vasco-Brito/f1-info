@@ -19,7 +19,7 @@ def update_lap_data(packet):  # Packet 2
         joueur.currentLap = element.m_current_lap_num
         joueur.penalties = element.m_penalties
         joueur.warnings = element.m_corner_cutting_warnings
-        joueur.currentLap = element.m_current_lap_num
+        joueur.sector = element.m_sector
         joueur.speed_trap = round(element.m_speedTrapFastestSpeed, 2)
         joueur.currentLapTime = element.m_current_lap_time_in_ms
         joueur.delta_to_leader = element.m_deltaToCarInFrontMSPart

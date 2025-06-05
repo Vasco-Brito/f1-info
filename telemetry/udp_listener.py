@@ -84,12 +84,12 @@ async def monitor_telemetry(bot):
                     red_flag_ativa = False
                     last_laps.clear()
                     voltas_concluidas.clear()
-                    print("[DEBUG] Reset do estado por nova sessão")
+                    # print("[DEBUG] Reset do estado por nova sessão")
 
                 tipo_corrida_atual = packet.m_session_type
                 nome_sessao_atual = get_nome_sessao(tipo_corrida_atual)
-                print(f"[DEBUG] Tipo de sessão atual: {tipo_corrida_atual} → {nome_sessao_atual}")
-                print(f"[DEBUG] UID da sessão: {session_uid_atual}")
+                # print(f"[DEBUG] Tipo de sessão atual: {tipo_corrida_atual} → {nome_sessao_atual}")
+                # print(f"[DEBUG] UID da sessão: {session_uid_atual}")
 
             elif packet_id == 2:
                 update_lap_data(packet)
@@ -123,64 +123,73 @@ async def monitor_telemetry(bot):
                     elif event_code == "PENA":
                         detalhes = packet.m_event_details.m_penalty
 
-                        tipo_penalizacao = getattr(detalhes, "m_penalty_type", -1)
-                        tipo_infracao = getattr(detalhes, "m_infringement_type", -1)
-                        tempo = getattr(detalhes, "m_time", 0)
-                        volta = getattr(detalhes, "m_time_lap_num", -1)
+                        penalizado_por_idx = detalhes.m_other_vehicle_idx
+                        piloto_idx = detalhes.m_vehicle_idx
 
-                        piloto_idx = getattr(detalhes, "m_vehicle_idx", -1)
-                        nome_piloto = (
-                            LISTE_JOUEURS[piloto_idx].name
-                            if 0 <= piloto_idx < len(LISTE_JOUEURS)
-                            else "Desconhecido"
-                        )
+                        if not (LISTE_JOUEURS[piloto_idx].aiControlled and (
+                                penalizado_por_idx == 255 or LISTE_JOUEURS[penalizado_por_idx].aiControlled
+                        )):
+                            tipo_penalizacao = detalhes.m_penalty_type
+                            tipo_infracao = detalhes.m_infringement_type
+                            tempo = detalhes.m_time
+                            volta = detalhes.m_lap_num
 
-                        penalizado_por_idx = getattr(detalhes, "m_other_vehicle_index", 255)
-                        penalizado_por = (
-                            LISTE_JOUEURS[penalizado_por_idx].name
-                            if penalizado_por_idx != 255 and penalizado_por_idx < len(LISTE_JOUEURS)
-                            else None
-                        )
+                            nome_piloto = (
+                                LISTE_JOUEURS[piloto_idx].name
+                                if 0 <= piloto_idx < len(LISTE_JOUEURS)
+                                else "Desconhecido"
+                            )
 
-                        # Registar DSQ se aplicável
-                        if tipo_penalizacao == 6:
-                            dsq_pilotos.add(nome_piloto)
-                            print(f"[🟥] {nome_piloto} foi desclassificado (DSQ)")
 
-                        penalizacao = {
-                            "piloto": nome_piloto,
-                            "tipo_penalizacao": tipo_penalizacao,
-                            "tipo_infracao": tipo_infracao,
-                            "volta": volta,
-                            "tempo": tempo,
-                            "penalizado_por": penalizado_por
-                        }
+                            penalizado_por = (
+                                LISTE_JOUEURS[penalizado_por_idx].name
+                                if penalizado_por_idx != 255 and penalizado_por_idx < len(LISTE_JOUEURS)
+                                else None
+                            )
 
-                        penalizacoes.append(penalizacao)
-                        print(f"[⚠️] Penalização registada: {penalizacao}")
+                            # Se for DSQ
+                            if tipo_penalizacao == 6:
+                                dsq_pilotos.add(nome_piloto)
+                                print(f"[🟥] {nome_piloto} foi desclassificado (DSQ)")
+
+                            penalizacao = {
+                                "piloto": nome_piloto,
+                                "tipo_penalizacao": tipo_penalizacao,
+                                "tipo_penalizacao_desc": PENALTY_TYPES.get(tipo_penalizacao,
+                                                                           f"Desconhecida ({tipo_penalizacao})"),
+                                "tipo_infracao": tipo_infracao,
+                                "tipo_infracao_desc": INFRINGEMENT_TYPES.get(tipo_infracao,
+                                                                             f"Desconhecida ({tipo_infracao})"),
+                                "volta": volta,
+                                "tempo": tempo,
+                                "penalizado_por": penalizado_por
+                            }
+
+                            penalizacoes.append(penalizacao)
+                            print(f"[⚠️] Penalização registada: {penalizacao}")
+
 
                     elif event_code == "COLL":
                         colisao = packet.m_event_details.m_collision
-                        idx1 = getattr(colisao, "m_vehicle_idx", 255)
-                        idx2 = getattr(colisao, "m_other_vehicle_idx", 255)
-                        tipo = getattr(colisao, "m_collision_type", -1)
-                        culpa = getattr(colisao, "m_fault", -1)
+                        idx1 = getattr(colisao, "m_vehicle1Idx", 255)
+                        idx2 = getattr(colisao, "m_vehicle2Idx", 255)
 
-                        nome1 = LISTE_JOUEURS[idx1].name if idx1 < len(LISTE_JOUEURS) else "Desconhecido"
-                        nome2 = LISTE_JOUEURS[idx2].name if idx2 < len(LISTE_JOUEURS) else "Desconhecido"
+                        if not (LISTE_JOUEURS[idx1].aiControlled and LISTE_JOUEURS[idx2].aiControlled):
+                            nome1 = LISTE_JOUEURS[idx1].name if idx1 < len(LISTE_JOUEURS) else "Desconhecido"
+                            nome2 = LISTE_JOUEURS[idx2].name if idx2 < len(LISTE_JOUEURS) else "Desconhecido"
+                            volta = LISTE_JOUEURS[idx1].currentLap if idx1 < len(LISTE_JOUEURS) else -1
+                            setor = (LISTE_JOUEURS[idx1].sector + 1) if idx1 < len(LISTE_JOUEURS) and hasattr(
+                                LISTE_JOUEURS[idx1], "sector") else -1
 
-                        tipos_colisao = {0: "Carro-Carro", 1: "Carro-Parede", 2: "Carro-Objeto"}
-                        tipos_culpa = {0: "Nenhum", 1: "Culpa do piloto", 2: "Culpa do outro", 3: "Ambos"}
+                            colisoes.append({
+                                "volta": volta,
+                                "setor": setor,
+                                "piloto": nome1,
+                                "contra": nome2 if idx2 != 255 else None
+                            })
 
-                        colisoes.append({
-                            "timestamp": dt.now().isoformat(),
-                            "piloto": nome1,
-                            "contra": nome2 if idx2 != 255 else None,
-                            "tipo": tipos_colisao.get(tipo, f"Desconhecido ({tipo})"),
-                            "culpa": tipos_culpa.get(culpa, f"Desconhecida ({culpa})")
-                        })
+                            print(f"[💥] Colisão na volta {volta}, setor {setor}: {nome1} ⇄ {nome2}")
 
-                        print(f"[💥] Colisão: {nome1} ⇄ {nome2}, tipo: {tipo}, culpa: {culpa}")
 
 
                     elif event_code == "RTMT":
