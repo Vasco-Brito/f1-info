@@ -48,11 +48,14 @@ dnf_pilotos = set()
 dsq_pilotos = set()
 safety_car_ativo = False
 red_flag_ativa = False
+melhores_tempos_qualy = {}
+
 
 
 async def monitor_telemetry(bot):
     global sent_final, session_uid_atual, tipo_corrida_atual, nome_sessao_atual, car_status_data_atual,\
-        jogadores_com_telemetria, penalizacoes, colisoes, dnf_pilotos, dsq_pilotos, safety_car_ativo, red_flag_ativa
+        jogadores_com_telemetria, penalizacoes, colisoes, dnf_pilotos, dsq_pilotos, safety_car_ativo, red_flag_ativa, \
+        melhores_tempos_qualy
 
     print(f"🟢 PORTA DE ESCUTA: {TELEMETRY_PORT}")
     listener = Listener(port=TELEMETRY_PORT)
@@ -111,6 +114,16 @@ async def monitor_telemetry(bot):
                                 )
                                 print(f"[Volta {volta_atual}] {msg}")
                                 await canal.send(msg)
+
+                # Guarda melhores tempos de qualificação
+                if tipo_corrida_atual in [5, 6, 7, 8, 9]:  # Q1–Q3, Short Q, OSQ
+                    for jogador in LISTE_JOUEURS:
+                        nome = jogador.name.strip()
+                        if not nome or jogador.bestLapTime == 0:
+                            continue
+                        if nome not in melhores_tempos_qualy or jogador.bestLapTime < melhores_tempos_qualy[nome]:
+                            melhores_tempos_qualy[nome] = jogador.bestLapTime
+
 
             elif packet_id == 3:
                 try:
@@ -241,67 +254,108 @@ async def monitor_telemetry(bot):
                         jogadores_com_telemetria.add(nome)
                         print(f"[📡] A receber telemetria completa de: {', '.join(sorted(jogadores_com_telemetria))}")
 
-            if packet_id == 8 and not sent_final and tipo_corrida_atual in [10, 11, 12, 13, 14, 15, 16, 17]:
-                if isinstance(packet, PacketFinalClassificationData):
-                    resultado = []
-                    for i, data in enumerate(packet.m_classification_data):
-                        nome = LISTE_JOUEURS[i].name or f"Carro {i}"
-                        ia = LISTE_JOUEURS[i].aiControlled
-                        melhor_volta_segundos = round(data.m_best_lap_time_in_ms / 1000.0, 3)
-                        tempo_total_segundos = round(data.m_total_race_time, 3)
-                        resultado.append({
-                            "idx": i,
-                            "posicao": data.m_position,
-                            "nome": nome,
-                            "ia": ia,
-                            "voltas": data.m_num_laps,
-                            "grid": data.m_grid_position,
-                            "pontos": data.m_points,
-                            "melhor_volta": melhor_volta_segundos,
-                            "melhor_volta_str": convert_tempo(melhor_volta_segundos),
-                            "tempo_total": tempo_total_segundos,
-                            "tempo_total_str": convert_tempo(tempo_total_segundos)
-                        })
+            if packet_id == 8 and not sent_final:
+                if tipo_corrida_atual in [10, 11, 12, 13, 14, 15, 16, 17]:
+                    if isinstance(packet, PacketFinalClassificationData):
+                        resultado = []
+                        for i, data in enumerate(packet.m_classification_data):
+                            nome = LISTE_JOUEURS[i].name or f"Carro {i}"
+                            ia = LISTE_JOUEURS[i].aiControlled
+                            melhor_volta_segundos = round(data.m_best_lap_time_in_ms / 1000.0, 3)
+                            tempo_total_segundos = round(data.m_total_race_time, 3)
+                            resultado.append({
+                                "idx": i,
+                                "posicao": data.m_position,
+                                "nome": nome,
+                                "ia": ia,
+                                "voltas": data.m_num_laps,
+                                "grid": data.m_grid_position,
+                                "pontos": data.m_points,
+                                "melhor_volta": melhor_volta_segundos,
+                                "melhor_volta_str": convert_tempo(melhor_volta_segundos),
+                                "tempo_total": tempo_total_segundos,
+                                "tempo_total_str": convert_tempo(tempo_total_segundos)
+                            })
 
-                    for r in resultado:
-                        r["DNF"] = 1 if r["nome"] in dnf_pilotos else 0
-                        r["DSQ"] = 1 if r["nome"] in dsq_pilotos else 0
+                        for r in resultado:
+                            r["DNF"] = 1 if r["nome"] in dnf_pilotos else 0
+                            r["DSQ"] = 1 if r["nome"] in dsq_pilotos else 0
 
-                    resultado = anexar_stats_a_resultado(resultado)
+                        resultado = anexar_stats_a_resultado(resultado)
 
-                    now = dt.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
-                    session_uid = header.m_session_uid
-                    filename = output_folder / f"corrida_{now}.json"
-                    with open(filename, "w", encoding="utf-8") as f:
-                        json.dump({
-                            "corrida": {
-                                "data": now,
-                                "tipo": nome_sessao_atual,
-                                "session_uid": session_uid,
-                                "resultado": resultado,
-                                "penalizacoes": penalizacoes,
-                                "voltas_concluidas": voltas_concluidas,
-                                "colisoes": colisoes,
-                                "safety_car": 1 if safety_car_ativo else 0,
-                                "red_flag": 1 if red_flag_ativa else 0
+                        now = dt.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
+                        session_uid = header.m_session_uid
+                        filename = output_folder / f"corrida_{now}.json"
+                        with open(filename, "w", encoding="utf-8") as f:
+                            json.dump({
+                                "corrida": {
+                                    "data": now,
+                                    "tipo": nome_sessao_atual,
+                                    "session_uid": session_uid,
+                                    "resultado": resultado,
+                                    "penalizacoes": penalizacoes,
+                                    "voltas_concluidas": voltas_concluidas,
+                                    "colisoes": colisoes,
+                                    "safety_car": 1 if safety_car_ativo else 0,
+                                    "red_flag": 1 if red_flag_ativa else 0
+                                }
+                            }, f, indent=2, ensure_ascii=False)
+
+                        canal = bot.get_channel(CHANNEL_ID)
+                        if canal:
+                            embed = discord.Embed(
+                                title="🏁 Corrida terminada!",
+                                description=f"Resultados guardados em `{filename.name}`",
+                                color=discord.Color.green()
+                            )
+                            embed.add_field(name="Top 3", value="\n".join(
+                                [f"**#{r['posicao']}** {r['nome']} — {r['pontos']} pts"
+                                 for r in sorted(resultado, key=lambda x: x['posicao'])[:3]]
+                            ))
+                            await canal.send(embed=embed)
+
+                        print(f"🏁 Corrida terminada. Resultados guardados em {filename}")
+                        sent_final = True
+                    elif tipo_corrida_atual in [5, 6, 7, 8, 9] and melhores_tempos_qualy:
+                        now = dt.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
+                        session_uid = header.m_session_uid
+                        filename = output_folder / f"qualificacao_{now}.json"
+
+                        resultado_qualy = [
+                            {
+                                "nome": nome,
+                                "melhor_volta": round(tempo, 3),
+                                "melhor_volta_str": convert_tempo(tempo)
                             }
-                        }, f, indent=2, ensure_ascii=False)
+                            for nome, tempo in sorted(melhores_tempos_qualy.items(), key=lambda x: x[1])
+                        ]
 
-                    canal = bot.get_channel(CHANNEL_ID)
-                    if canal:
-                        embed = discord.Embed(
-                            title="🏁 Corrida terminada!",
-                            description=f"Resultados guardados em `{filename.name}`",
-                            color=discord.Color.green()
-                        )
-                        embed.add_field(name="Top 3", value="\n".join(
-                            [f"**#{r['posicao']}** {r['nome']} — {r['pontos']} pts"
-                             for r in sorted(resultado, key=lambda x: x['posicao'])[:3]]
-                        ))
-                        await canal.send(embed=embed)
+                        with open(filename, "w", encoding="utf-8") as f:
+                            json.dump({
+                                "qualificacao": {
+                                    "data": now,
+                                    "tipo": nome_sessao_atual,
+                                    "session_uid": session_uid,
+                                    "resultados": resultado_qualy
+                                }
+                            }, f, indent=2, ensure_ascii=False)
 
-                    print(f"🏁 Corrida terminada. Resultados guardados em {filename}")
-                    sent_final = True
+                        canal = bot.get_channel(CHANNEL_ID)
+                        if canal:
+                            embed = discord.Embed(
+                                title="⏱️ Qualificação concluída!",
+                                description=f"Tempos guardados em `{filename.name}`",
+                                color=discord.Color.blue()
+                            )
+                            embed.add_field(name="Top 3", value="\n".join(
+                                [f"**#{i + 1}** {r['nome']} — {r['melhor_volta_str']}" for i, r in
+                                 enumerate(resultado_qualy[:3])]
+                            ))
+                            await canal.send(embed=embed)
+
+                        print(f"⏱️ Qualificação terminada. Resultados guardados em {filename}")
+                        sent_final = True
+
 
         except Exception as e:
             print(f"❌ Erro no loop de telemetria: {e}")
